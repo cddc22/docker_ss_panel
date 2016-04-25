@@ -1,0 +1,196 @@
+<!doctype html>
+<html class="signin no-js" lang="">
+
+<head>
+    <!-- meta -->
+    <meta charset="utf-8">
+    <meta name="description" content="Flat, Clean, Responsive, admin template built with bootstrap 3">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <!-- /meta -->
+
+    <title>重置MarisaGo的密码</title>
+
+    <!-- page level plugin styles -->
+    <link rel="stylesheet" href="../asset/../asset/vendor/offline/theme.css">
+    <link rel="stylesheet" href="../asset/vendor/pace/theme.css">
+    <!-- /page level plugin styles -->
+
+    <!-- core styles -->
+    <link rel="stylesheet" href="../asset/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../asset/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../asset/css/animate.min.css">
+    <!-- /core styles -->
+
+    <!-- template styles -->
+    <link rel="stylesheet" href="../asset/css/skins/palette.1.css" id="skin">
+    <link rel="stylesheet" href="../asset/css/fonts/style.1.css" id="font">
+    <link rel="stylesheet" href="../asset/css/skins/main.css">
+    <!-- template styles -->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- load jq -->
+    <script src="../asset/js/jQuery.min.js"></script>
+
+</head>
+
+<body class="bg-color center-wrapper">
+<div class="center-content">
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+            <section class="panel panel-default">
+                <header class="panel-heading">找回密码</header>
+                <div class="bg-white user pd-md">
+                    <h6>
+                        <strong>找回丢失的密码</strong></h6>
+                    <form role="form">
+                        <div id="check">
+                            <input type="text" id="email" class="form-control mg-b-sm " placeholder="输入注册的邮箱" autofocus="" />
+
+                            <input type="text" id="valicode" class="form-control mg-b-sm" placeholder="输入下图验证码" /><img src="_resetpwd.php" id="codeimg" />
+
+                            <button type="button" id="mail-submit" class="btn btn-block btn-info">下一步</button>
+                        </div>
+                        <div id="newpwd">
+                            <input type="text" id="passwd-valicode" class="form-control mg-b-sm " placeholder="输入邮件中的6位验证码" autofocus="" />
+
+                            <input type="password" id="passwd-newpass" class="form-control mg-b-sm" placeholder="输入新密码" />
+
+                            <input type="password" id="passwd-renewpass" class="form-control mg-b-sm" placeholder="再输入一遍新密码" />
+
+                            <button type="button" id="passwd-submit" class="btn btn-block btn-info">修改</button>
+                        </div>
+                       <div id="error">
+                            <br/>
+                            <div class="alert alert-danger fade in">
+                                <strong>发生错误</strong><p id="error-info"></p>
+                            </div>
+                        </div>
+                        <div id="success">
+                            <br/>
+                            <div class="alert alert-success fade in">
+                                <strong>操作成功</strong><p id="success-info"></p>
+                            </div>
+                        </div>
+                    </form>
+                    <p class="center-block mg-t mg-b text-right">又记得密码了？
+                        <a href="../c_user/signin.html">点击登陆</a>
+                    </p>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<script>
+
+
+    function codeimg(){
+        $("#codeimg").attr("src","_resetpwd.php");
+    }
+
+    function sendmail(){
+        $.ajax({
+            type:"POST",
+            url:"_resetpwd.php",
+            dataType:"json",
+            data: {
+                action: "sendmail"
+            },
+            success:function(data){
+                if(data.ok){
+                    alert(data.msg);
+                    $("#error").hide();
+                    $("#codeimg").hide();
+                    $("#check").hide();
+                    $("#newpwd").show();
+                }
+                else{
+                    alert("邮件发送失败");
+                }
+            },
+            error:function(jqXHR){
+                alert("发生错误："+jqXHR.status);
+            }
+        })
+    }
+
+    function passwd_submit(){
+        $.ajax({
+            type:"POST",
+            url:"_resetpwd.php",
+            dataType:"json",
+            data: {
+                action:"updatepwd",
+                mailcode:$("#passwd-valicode").val(),
+                pwd:$("#passwd-newpass").val(),
+                repwd:$("#passwd-renewpass").val()
+            },
+            success:function(data){
+                if(data.ok){
+                    $("#success").show();
+                    $("#success-info").html(data.msg);
+                    window.setTimeout("window.location = '../c_user/signin.html'",3000);
+                }
+                else{
+                    $("#error").show();
+                    $("#error-info").html(data.msg);
+                }
+            },
+            error:function(jqXHR){
+                alert("发生错误："+jqXHR.status);
+            }
+        })
+    }
+
+    function mailaddress_submit(){
+        $.ajax({
+            type:"POST",
+            url:"_resetpwd.php",
+            dataType:"json",
+            data:{
+                action: "check",
+                code: $("#valicode").val(),
+                email: $("#email").val()
+            },
+            success:function(data){
+                if(data.ok){
+                    $("#mail-submit").html("处理中...");
+                    $("#mail-submit").attr("class","btn btn-block btn-info disabled");
+                    sendmail();
+                }else{
+                    $("#error").show();
+                    $("#error-info").html(data.msg);
+                    codeimg();
+                }
+            },
+            error:function(jqXHR){
+                alert("发生错误："+jqXHR.status);
+            }
+        })
+    }
+
+    $(document).ready(function(){
+        $("#newpwd").hide();
+        $("#error").hide();
+        $("#success").hide();
+        $("#mail-submit").click(function(){
+            mailaddress_submit();
+        });
+        $("#passwd-submit").click(function () {
+            passwd_submit();
+        });
+        $("#codeimg").click(function(){
+            codeimg();
+        });
+
+    })
+</script>
+
+</body>
+
+</html>
