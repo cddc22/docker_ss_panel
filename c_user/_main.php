@@ -78,22 +78,22 @@ $total = round($oo->get_transfer_enable()/$togb,2);
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="http://static.marisago.com/d/shadowsocks.rar">
+                            <a href="http://static.marisago.com:8080/d/shadowsocks.rar">
                                 <span>ShadowSocks For Windows</span>
                             </a>
                         </li>
                         <li>
-                            <a href="http://static.marisago.com/d/shadowsocks.apk">
+                            <a href="http://static.marisago.com:8080/d/shadowsocks.apk">
                                 <span>ShadowSocks For Android</span>
                             </a>
                         </li>
 						<li>
-                            <a href="http://static.marisago.com/d/shadowsocks.dmg">
+                            <a href="http://static.marisago.com:8080/d/shadowsocks.dmg">
                                 <span>ShadowSocks For Mac</span>
                             </a>
                         </li>
 						<li>
-                            <a href="http://static.marisago.com/d/anyconnect.msi">
+                            <a href="http://static.marisago.com:8080/d/anyconnect.msi">
                                 <span>cisco anyconnect客户端for windows</span>
                             </a>
                         </li>

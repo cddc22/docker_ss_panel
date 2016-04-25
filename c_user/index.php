@@ -242,7 +242,7 @@ global $uid;
                                                         </span>
                                 </a>
                                 <div class="text-left">
-                                    <a href="http://static.marisago.com/d/shadowsocks.rar"><span class="text-success">下载客户端</span></a>
+                                    <a href="http://static.marisago.com:8080/d/shadowsocks.rar"><span class="text-success">下载客户端</span></a>
                                     <small class="center-block">Client for Windows</small>
                                 </div>
                             </div>
@@ -259,7 +259,7 @@ global $uid;
                                                         </span>
                                 </a>
                                 <div class="text-left">
-                                    <a href="http://static.marisago.com/d/shadowsocks.apk"><span class="text-success">下载客户端</span></a>
+                                    <a href="http://static.marisago.com:8080/d/shadowsocks.apk"><span class="text-success">下载客户端</span></a>
                                     <small class="center-block">Client for Android</small>
                                 </div>
                             </div>
