@@ -1,6 +1,7 @@
 <?php
 
 include_once '../lib/config.php';
+require_once '_check.php';
 
 $validate_code = $_POST['mailcode'];
 $uid = $_POST['uid'];

@@ -1,5 +1,7 @@
 <?php
 require_once '../lib/config.php';
+require_once '_check.php';
+
 
 $code = $_POST['code'];
 $uid = $_POST['uid'];

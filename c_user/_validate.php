@@ -1,5 +1,6 @@
 <?php
 require_once '../lib/config.php';
+require_once '_check.php';
 //邀请模式参考微林大概
 
 
